@@ -160,6 +160,11 @@ const cleanName = function(name){
   return cleanName.length != 0 ? null : cleanName.join("");
 }
 
+/**
+ * isSalaryValid determines whether a salary contains non-numeric characters.
+ * @param {string} salary 
+ * @returns true if salary contains all digits, otherwise, return false
+ */
 const isSalaryValid = function(salary){
   for(let i = 0; i < 10; i++){
     const digit = salary.charCodeAt(i);
