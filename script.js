@@ -80,7 +80,34 @@ const addNewEmployee = function () {
       }      
     }
 
-    while(key.salary)
+    while(key.salary){
+      let salary = window.prompt(`Enter ${employeeData.firstName} ${employeeData.lastName}'s salary`);
+
+      // handle "cancel" option, ask user once again before quit
+      if(salary === null){
+        const stop = window.confirm("Are you sure to quit?");
+        if(stop){
+          addNewEmployeeStatus.interrupt = true;
+          addNewEmployeeStatus.process = false;
+          break;  
+        } 
+      }
+
+      if(salary.length === 0 || salary.length > 10){
+        window.alert("Salary cannot exceed 10 characters")
+      }
+      if(!isSalaryValid(salary)){
+        window.alert("Salary must contain digits only")
+      }
+
+      salary = parseFloat(salary);
+      if(salary < 0.01 || salary > 1_000_000_000){
+        window.alert("Salary must be at least $0.01 and cannot exceed $1,000,000,000");
+      }
+
+      employeeData.salary = salary;
+      key.salary = false;
+    }
 
     employeeArr.push(employeeData);
 
@@ -91,7 +118,7 @@ const addNewEmployee = function () {
       }
     }
   }
-};
+}
 
 /**
  * cleanName remove all non-alphabetic characters except space " "
@@ -131,6 +158,16 @@ const cleanName = function(name){
   }
 
   return cleanName.length != 0 ? null : cleanName.join("");
+}
+
+const isSalaryValid = function(salary){
+  for(let i = 0; i < 10; i++){
+    const digit = salary.charCodeAt(i);
+
+    if(digit < 48 || digit > 57) return false;
+  }
+
+  return true;
 }
 
 // Display the average salary
