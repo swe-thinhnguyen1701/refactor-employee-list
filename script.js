@@ -15,8 +15,17 @@ const collectEmployees = function () {
  * until user stops entering
  */
 const addNewEmployee = function () {
-  let addNewEmployeeStatus = true;
-  while (addNewEmployeeStatus) {
+  let addNewEmployeeStatus = {
+    process: true,
+    interrupt: false
+  };
+  while (addNewEmployeeStatus.process) {
+    const employeeData = {
+      firstName: "",
+      lastName: "",
+      salary: 0,
+    };
+
     const key = {
       firstName: true,
       lastName: false,
@@ -29,25 +38,31 @@ const addNewEmployee = function () {
       // handle "cancel" option, ask user once again before quit
       if(firstName === null){
         const stop = window.confirm("Are you sure to quit?");
-        if(stop) break;
+        if(stop){
+          addNewEmployeeStatus.interrupt = true;
+          addNewEmployeeStatus.process = false;
+          break;  
+        } 
       }
 
       firstName = cleanName(firstName);
-
       if(firstName.length == 0 || firstName.length > 32){
         window.alert("First name must have at least 1 character and at most 32 characters");
-      }else{        
+      }else{
+        employeeData.firstName = firstName;
         key.lastName = true;
         key.firstName = false;
       }      
     }
 
-    
-    const employeeData = {
-      firstName: "",
-      lastName: "",
-      salary: 0,
-    };
+    employeeArr.push(employeeData);
+
+    if(!key.firstName && !key.lastName && !key.salary && !addNewEmployeeStatus.interrupt){
+      const repeat = window.confirm("Would you like to continue to add more employee?");
+      if(!repeat){
+        addNewEmployeeStatus.process = false;
+      }
+    }
   }
 };
 
