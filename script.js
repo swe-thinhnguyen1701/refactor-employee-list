@@ -17,6 +17,8 @@ const collectEmployees = function () {
 const addNewEmployee = function () {
   let addNewEmployeeStatus = true;
   while (addNewEmployeeStatus) {
+    const firstName = window.prompt("Enter employee first name");
+    while(!isNameValid(firstName) || )
     const employeeData = {
       firstName: "",
       lastName: "",
