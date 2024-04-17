@@ -45,6 +45,7 @@ const addNewEmployee = function () {
         } 
       }
 
+      // clean first name
       firstName = cleanName(firstName);
       if(firstName.length == 0 || firstName.length > 32){
         window.alert("First name must have at least 1 character and at most 32 characters");
@@ -54,6 +55,32 @@ const addNewEmployee = function () {
         key.firstName = false;
       }      
     }
+
+    while(key.lastName){
+      let lastName = window.prompt("Enter employee last name");
+
+      // handle "cancel" option, ask user once again before quit
+      if(lastName === null){
+        const stop = window.confirm("Are you sure to quit?");
+        if(stop){
+          addNewEmployeeStatus.interrupt = true;
+          addNewEmployeeStatus.process = false;
+          break;  
+        } 
+      }
+
+      // clean last name
+      lastName = cleanName(lastName);
+      if(lastName.length == 0 || lastName.length > 32){
+        window.alert("Last name must have at least 1 character and at most 32 characters");
+      }else{
+        employeeData.lastName = lastName;
+        key.salary = true;
+        key.lastName = false;
+      }      
+    }
+
+    while(key.salary)
 
     employeeArr.push(employeeData);
 
@@ -105,16 +132,6 @@ const cleanName = function(name){
 
   return cleanName.length != 0 ? null : cleanName.join("");
 }
-
-/**
- * isNameValid determine whether a name qualify condition
- * @param {string} name of a new employee
- * @returns false if name === null or the length of name is equal to 0 and greater than 32
- */
-// const isNameValid = function (name) {
-//   if (name === null || name.length === 0 || name.length > 32) return false;
-//   return true;
-// };
 
 // Display the average salary
 const displayAverageSalary = function (employeesArray) {
