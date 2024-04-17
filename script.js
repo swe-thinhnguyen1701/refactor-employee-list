@@ -17,8 +17,32 @@ const collectEmployees = function () {
 const addNewEmployee = function () {
   let addNewEmployeeStatus = true;
   while (addNewEmployeeStatus) {
-    const firstName = window.prompt("Enter employee first name");
-    while(!isNameValid(firstName) || )
+    const key = {
+      firstName: true,
+      lastName: false,
+      salary: false
+    }
+
+    while(key.firstName){
+      let firstName = window.prompt("Enter employee first name");
+
+      // handle "cancel" option, ask user once again before quit
+      if(firstName === null){
+        const stop = window.confirm("Are you sure to quit?");
+        if(stop) break;
+      }
+
+      firstName = cleanName(firstName);
+
+      if(firstName.length == 0 || firstName.length > 32){
+        window.alert("First name must have at least 1 character and at most 32 characters");
+      }else{        
+        key.lastName = true;
+        key.firstName = false;
+      }      
+    }
+
+    
     const employeeData = {
       firstName: "",
       lastName: "",
@@ -28,14 +52,54 @@ const addNewEmployee = function () {
 };
 
 /**
+ * cleanName remove all non-alphabetic characters except space " "
+ * @param {string} name of a new employee
+ * @returns a cleaned name
+ */
+const cleanName = function(name){
+  let beginIdx = 0, endIdx = 0;
+
+  // remove leading and trailing non-alphabetic characters
+  for(let i = 0; i < name.length; i ++){
+    const char = name.charCodeAt(i);
+
+    if((char >= 97 && char <= 122) || (char >= 65 && char <= 90)){
+      beginIdx = i;
+      break;
+    }
+  }
+  for(let i = name.length - 1; i > -1; i--){
+    const char = name.charCodeAt(i);
+
+    if((char >= 97 && char <= 122) || (char >= 65 && char <= 90)){
+      endIdx = i;
+      break;
+    }
+  }
+  name = name.slice(beginIdx, endIdx + 1);
+  
+  // remove all non-alphabetic characters except space " "
+  let cleanName = [];
+  for(let i = 0; i < name.length; i++){
+    const char = name.charCodeAt(i);
+
+    if((char >= 97 && char <= 122) || (char >= 65 && char <= 90) || char === 32){
+      cleanName.push(name.charAt(i))
+    }
+  }
+
+  return cleanName.length != 0 ? null : cleanName.join("");
+}
+
+/**
  * isNameValid determine whether a name qualify condition
- * @param {*} name of a new employee
+ * @param {string} name of a new employee
  * @returns false if name === null or the length of name is equal to 0 and greater than 32
  */
-const isNameValid = function (name) {
-  if (name === null || name.length === 0 || name.length > 32) return false;
-  return true;
-};
+// const isNameValid = function (name) {
+//   if (name === null || name.length === 0 || name.length > 32) return false;
+//   return true;
+// };
 
 // Display the average salary
 const displayAverageSalary = function (employeesArray) {
