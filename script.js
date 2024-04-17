@@ -42,7 +42,7 @@ const addNewEmployee = function () {
           addNewEmployeeStatus.interrupt = true;
           addNewEmployeeStatus.process = false;
           break;
-        }        
+        }
       } else {
         // clean first name
         if (firstName.length === 0 || firstName.length > 32) {
@@ -74,7 +74,7 @@ const addNewEmployee = function () {
           addNewEmployeeStatus.interrupt = true;
           addNewEmployeeStatus.process = false;
           break;
-        }        
+        }
       } else {
         // clean first name
         if (lastName.length === 0 || lastName.length > 32) {
@@ -108,24 +108,21 @@ const addNewEmployee = function () {
           addNewEmployeeStatus.process = false;
           break;
         }
+      } else {
+        if (!isSalaryValid(salary)) {
+          window.alert("INVALID salary");
+        } else {
+          salary = parseFloat(salary);
+          if (salary < 0.01 || salary > 1_000_000_000) {
+            window.alert(
+              "Salary must be at least $0.01 and cannot exceed $1,000,000,000"
+            );
+          }else{
+            employeeData.salary = salary;
+            key.salary = false;
+          }
+        }
       }
-
-      if (salary.length === 0 || salary.length > 10) {
-        window.alert("Salary cannot exceed 10 characters");
-      }
-      if (!isSalaryValid(salary)) {
-        window.alert("Salary must contain digits only");
-      }
-
-      salary = parseFloat(salary);
-      if (salary < 0.01 || salary > 1_000_000_000) {
-        window.alert(
-          "Salary must be at least $0.01 and cannot exceed $1,000,000,000"
-        );
-      }
-
-      employeeData.salary = salary;
-      key.salary = false;
     }
 
     if (
@@ -143,7 +140,7 @@ const addNewEmployee = function () {
       }
     }
   }
-
+  
   console.log(employeeArr);
 };
 
@@ -198,9 +195,15 @@ const cleanName = function (name) {
  * @returns true if salary contains all digits, otherwise, return false
  */
 const isSalaryValid = function (salary) {
+  let period = false;
+
   for (let i = 0; i < 10; i++) {
     const digit = salary.charCodeAt(i);
-
+    if (digit == 46){
+      if(period) return false;
+      period = true;
+      continue;
+    }
     if (digit < 48 || digit > 57) return false;
   }
 
@@ -210,11 +213,18 @@ const isSalaryValid = function (salary) {
 // Display the average salary
 const displayAverageSalary = function (employeesArray) {
   // TODO: Calculate and display the average salary
+  let sum = 0;
+  for(let employee of employeesArray){
+    sum += employee.salary;
+  }
+
+  console.log(`Average salary: $${sum/employeesArray.length}`);
 };
 
 // Select a random employee
 const getRandomEmployee = function (employeesArray) {
   // TODO: Select and display a random employee
+  console.log(employeesArray[Math.floor(Math.random() * employeesArray.length)]);
 };
 
 /*
