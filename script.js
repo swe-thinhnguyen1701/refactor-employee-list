@@ -6,7 +6,42 @@ const employeeArr = [];
 
 // Collect employee data
 const collectEmployees = function() {
-  // TODO: Get user input to create and return an array of employee objects
+  // TODO: Get user input to create and return an array of employee objects  
+  addNewEmployee();
+
+  
+}
+
+/**
+ * addNewEmployee prompts user to enter data for new employee and runs infinitely
+ * until user stops entering
+ */
+const addNewEmployee = function() {
+  let addNewEmployeeStatus = true;
+  while(addNewEmployeeStatus){
+    const employeeData = {
+      firstName: "",
+      lastName: "",
+      salary: 0
+    };
+
+
+  }
+}
+
+const isNameValid = function (name) {
+  if(name === null || name.length === 0) return false;
+
+  // remove all leading non-alphabet character
+  let beginIdx = 0;
+  for(let i = 0; i < name.length; i++){
+    if(name.charAt(i).match(/(a-z)/)){
+      beginIdx = i;
+      break;
+    }
+  }
+
+  // remove all trailing non-alphabet character
 }
 
 // Display the average salary
