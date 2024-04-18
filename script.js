@@ -208,25 +208,9 @@ const cleanName = function (name) {
     endIdx = 0;
 
   // remove leading and trailing non-alphabetic characters
-  for (let i = 0; i < name.length; i++) {
-    const char = name.charCodeAt(i);
+  name = name.trim();
 
-    if ((char >= 97 && char <= 122) || (char >= 65 && char <= 90)) {
-      beginIdx = i;
-      break;
-    }
-  }
-  for (let i = name.length - 1; i > -1; i--) {
-    const char = name.charCodeAt(i);
-
-    if ((char >= 97 && char <= 122) || (char >= 65 && char <= 90)) {
-      endIdx = i;
-      break;
-    }
-  }
-  name = name.slice(beginIdx, endIdx + 1);
-
-  // remove all non-alphabetic characters except space " "
+  // remove all non-alphabetic characters except white space " "
   let cleanName = [];
   for (let i = 0; i < name.length; i++) {
     const char = name.charCodeAt(i);
