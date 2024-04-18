@@ -1,16 +1,21 @@
-# 03 JavaScript: Employee Payroll Tracker
+# Employee Payroll Tracker
 
-## Your Task
+## Achivement
 
-This week's Challenge requires you to modify starter code to create an application that enables a payroll manager to view and manage employee payroll data. This app will run in the browser and will feature dynamically updated HTML and CSS powered by JavaScript code that you write. It will have a clean and polished, responsive user interface that adapts to multiple screen sizes.
+Modifying JS file makes the program understand on multiple exceptions. It now can identify whether an input is valid or not and will help users to understand why exception raise. Therefore, users are able to adjust their input to let the system work more efficient. Additionally, the system also stores the backup data incase user unintentionally click cancel. Moreover, it also can help user to remove non-alphabetic characters in their first/last name.
 
-## User Story
-
-```md
-AS A payroll manager
-I WANT AN employee payroll tracker
-SO THAT I can see my employees' payroll data and properly budget for the company
+## Handle First/Last Name Input
 ```
+WHEN users enter nothing or too long first/last name
+THEN the system will give an alert to let users know their input does not qualify the length.
+```
+![Alert message pops up when first/last name does not qualify the length](/img/first-last-name-exception.png)
+
+```
+WHEN users enter invalid input, such as name does not have any alphabetic characters
+THEN the system will give an alert to let users know their input is INVALID.
+```
+
 
 ## Acceptance Criteria
 
