@@ -1,8 +1,7 @@
 // Get a reference to the #add-employees-btn element
 const addEmployeesBtn = document.querySelector("#add-employees-btn");
 
-// Create employee array const
-const restoreEmployeeArr = [];
+let restoreEmployeeArr = [];
 
 // Collect employee data
 const collectEmployees = function () {
@@ -12,7 +11,9 @@ const collectEmployees = function () {
 
 /**
  * addNewEmployee run infinitely to get user data until user stop adding new employees
- * or interrupts the program.
+ * or interrupts the program. IF sucess, the program will return a new array. IF fails,
+ * it will restore data from previous input.
+ *
  * @returns a new employee list if user stop adding new employees
  * @returns a previous employee list if user interrupt (cancel) while being prompted.
  */
@@ -25,9 +26,7 @@ const addNewEmployee = function () {
       lastName: "",
       salary: 0,
     };
-
     let firstName = nameValidation("first name");
-    console.log(firstName);
     if (firstName === null) break;
 
     let lastName = nameValidation("last name");
@@ -36,6 +35,9 @@ const addNewEmployee = function () {
     let salary = salaryValidation(firstName, lastName);
     if (salary === null) break;
 
+    employeeData.firstName = firstName;
+    employeeData.lastName = lastName;
+    employeeData.salary = salary;
     employeeArr.push(employeeData);
     const repeat = window.confirm(
       "Would you like to continue adding more employee?"
@@ -45,13 +47,14 @@ const addNewEmployee = function () {
       return employeeArr;
     }
   }
-  console.log(employeeArr);
+  // console.log(employeeArr);
   return restoreEmployeeArr;
 };
 
 /**
  * nameValidation handles both first and last name of employees. It runs infinitely
  * until the name is valid or user interrupts (cancel) while being prompted
+ *
  * @param {string} firstLastName first or last name of new employees
  * @returns the valid name
  */
@@ -91,6 +94,7 @@ const nameValidation = function (firstLastName) {
 
 /**
  * cleanName remove all non-alphabetic characters except space " "
+ *
  * @param {string} name of a new employee
  * @returns a cleaned name
  */
@@ -117,6 +121,7 @@ const cleanName = function (name) {
 
 /**
  * salaryValidation run infite loop until it get the valid amount or being interrupted
+ *
  * @param {string} firstName of an employee
  * @param {string} lastName of an employee
  * @returns null if user cancel while being prompted, otherwise return the valid amount of salary
@@ -149,6 +154,7 @@ const salaryValidation = function (firstName, lastName) {
 
 /**
  * isSalaryValid determines whether a salary contains non-numeric characters.
+ *
  * @param {string} salary
  * @returns true if salary contains all digits, otherwise, return false
  */
@@ -171,6 +177,10 @@ const isSalaryValid = function (salary) {
 // Display the average salary
 const displayAverageSalary = function (employeesArray) {
   // TODO: Calculate and display the average salary
+  if (employeesArray.length == 0) {
+    console.log("Cannot calculate average salary due to empty list");
+    return;
+  }
   let sum = 0;
   for (let employee of employeesArray) {
     sum += employee.salary;
@@ -182,6 +192,10 @@ const displayAverageSalary = function (employeesArray) {
 // Select a random employee
 const getRandomEmployee = function (employeesArray) {
   // TODO: Select and display a random employee
+  if(employeesArray.length == 0) {
+    console.log("Cannot find any employees due to empty list");
+    return;
+  }
   console.log(
     `Random employee: ${
       employeesArray[Math.floor(Math.random() * employeesArray.length)]
