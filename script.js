@@ -98,22 +98,23 @@ const nameValidation = function (firstLastName) {
  * @param {string} name of a new employee
  * @returns a cleaned name
  */
+/**
+ * cleanName trims all leading and trailing white space and detects non-alphabetic characters
+ * 
+ * @param {string} name of a new employee
+ * @returns null if cleaned name has 0 characters or contains non-alphabetic character inside.
+ */
 const cleanName = function (name) {
   // remove leading and trailing non-alphabetic characters
   name = name.trim();
 
-  // remove all non-alphabetic characters except white space " "
   let cleanName = [];
   for (let i = 0; i < name.length; i++) {
     const char = name.charCodeAt(i);
 
-    if (
-      (char >= 97 && char <= 122) ||
-      (char >= 65 && char <= 90) ||
-      char === 32
-    ) {
+    if ((char >= 97 && char <= 122) || (char >= 65 && char <= 90)) {
       cleanName.push(name.charAt(i));
-    }
+    }else return null;
   }
 
   return cleanName.length != 0 ? cleanName.join("") : null;
@@ -192,7 +193,7 @@ const displayAverageSalary = function (employeesArray) {
 // Select a random employee
 const getRandomEmployee = function (employeesArray) {
   // TODO: Select and display a random employee
-  if(employeesArray.length == 0) {
+  if (employeesArray.length == 0) {
     console.log("Cannot find any employees due to empty list");
     return;
   }
