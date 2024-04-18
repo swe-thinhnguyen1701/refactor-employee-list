@@ -7,7 +7,7 @@ const employeeArr = [];
 // Collect employee data
 const collectEmployees = function () {
   // TODO: Get user input to create and return an array of employee objects
-  addNewEmployee();
+  return addNewEmployee();
 };
 
 /**
@@ -32,6 +32,7 @@ const addNewEmployee = function () {
       salary: false,
     };
 
+    // prompt first name
     while (key.firstName) {
       let firstName = window.prompt("Enter employee first name");
 
@@ -95,6 +96,7 @@ const addNewEmployee = function () {
       }
     }
 
+    // prompt salary
     while (key.salary) {
       let salary = window.prompt(
         `Enter ${employeeData.firstName} ${employeeData.lastName}'s salary`
@@ -136,12 +138,12 @@ const addNewEmployee = function () {
         "Would you like to continue to add more employee?"
       );
       if (!repeat) {
-        addNewEmployeeStatus.process = false;
+        addNewEmployeeStatus.process = false; 
       }
     }
   }
-  
   console.log(employeeArr);
+  return employeeArr;
 };
 
 /**
@@ -272,6 +274,8 @@ const trackEmployeeData = function () {
   const employees = collectEmployees();
 
   console.table(employees);
+
+  console.log(employees);
 
   displayAverageSalary(employees);
 
