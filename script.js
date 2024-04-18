@@ -67,12 +67,15 @@ const addNewEmployee = function () {
     //     }
     //   }
     // }
-    let firstName = nameValidation("first");
+    let firstName = nameValidation("first name");
     console.log(firstName);
     if (firstName === null) break;
 
-    let lastName = nameValidation("last");
+    let lastName = nameValidation("last name");
     if (lastName === null) break;
+
+    let salary = salaryValidation(firstName, lastName);
+    if(salary === null) break;
     // Prompt last name
     // while (key.lastName) {
     //   let lastName = window.prompt("Enter employee last name");
@@ -106,35 +109,35 @@ const addNewEmployee = function () {
     // }
 
     // prompt salary
-    while (key.salary) {
-      let salary = window.prompt(
-        `Enter ${employeeData.firstName} ${employeeData.lastName}'s salary`
-      );
+    // while (key.salary) {
+    //   let salary = window.prompt(
+    //     `Enter ${employeeData.firstName} ${employeeData.lastName}'s salary`
+    //   );
 
-      // handle "cancel" option, ask user once again before quit
-      if (salary === null) {
-        const stop = window.confirm("Are you sure to quit?");
-        if (stop) {
-          addNewEmployeeStatus.interrupt = true;
-          addNewEmployeeStatus.process = false;
-          break;
-        }
-      } else {
-        if (!isSalaryValid(salary)) {
-          window.alert("INVALID salary");
-        } else {
-          salary = parseFloat(salary);
-          if (salary < 0.01 || salary > 1_000_000_000) {
-            window.alert(
-              "Salary must be at least $0.01 and cannot exceed $1,000,000,000"
-            );
-          } else {
-            employeeData.salary = salary;
-            key.salary = false;
-          }
-        }
-      }
-    }
+    //   // handle "cancel" option, ask user once again before quit
+    //   if (salary === null) {
+    //     const stop = window.confirm("Are you sure to quit?");
+    //     if (stop) {
+    //       addNewEmployeeStatus.interrupt = true;
+    //       addNewEmployeeStatus.process = false;
+    //       break;
+    //     }
+    //   } else {
+    //     if (!isSalaryValid(salary)) {
+    //       window.alert("INVALID salary");
+    //     } else {
+    //       salary = parseFloat(salary);
+    //       if (salary < 0.01 || salary > 1_000_000_000) {
+    //         window.alert(
+    //           "Salary must be at least $0.01 and cannot exceed $1,000,000,000"
+    //         );
+    //       } else {
+    //         employeeData.salary = salary;
+    //         key.salary = false;
+    //       }
+    //     }
+    //   }
+    // }
 
     if (
       !key.firstName &&
@@ -156,17 +159,17 @@ const addNewEmployee = function () {
 };
 
 /**
- * nameValidation handles both first and last name of employees. It runs infinitely 
- * until the name is valid or user interrupt (cancle) while being prompted
- * @param {*} firstLastName first or last name of new employees
- * @returns
+ * nameValidation handles both first and last name of employees. It runs infinitely
+ * until the name is valid or user interrupts (cancel) while being prompted
+ * @param {string} firstLastName first or last name of new employees
+ * @returns the valid name
  */
 const nameValidation = function (firstLastName) {
   while (true) {
-    let name = window.prompt(`Enter employee ${firstLastName} name`);
+    let employeeName = window.prompt(`Enter employee ${firstLastName}`);
 
     // handle "cancel" option, ask user once again before quit
-    if (name === null) {
+    if (employeeName === null) {
       const stop = window.confirm("Are you sure to quit?");
       if (stop) {
         return null;
@@ -174,20 +177,24 @@ const nameValidation = function (firstLastName) {
       continue;
     }
 
-    if (name.length === 0 || name.length > 32) {
+    if (employeeName.length === 0 || employeeName.length > 32) {
       window.alert(
-        `${firstLastName} name must have at least 1 character and at most 32 characters`
+        `${firstLastName} must have at least 1 character and at most 32 characters`
       );
       continue;
     }
 
-    name = cleanName(name);
-    if (name === null || name.length == 0 || name.length > 32) {
-      window.alert(`${firstLastName} name is INVALID`);
+    employeeName = cleanName(employeeName);
+    if (
+      employeeName === null ||
+      employeeName.length == 0 ||
+      employeeName.length > 32
+    ) {
+      window.alert(`${firstLastName} is INVALID`);
       continue;
     }
 
-    return name;
+    return employeeName;
   }
 };
 
@@ -234,6 +241,40 @@ const cleanName = function (name) {
   }
 
   return cleanName.length != 0 ? cleanName.join("") : null;
+};
+
+/**
+ * salaryValidation run infite loop until it get the valid amount or being interrupted
+ * @param {string} firstName of an employee
+ * @param {string} lastName of an employee
+ * @returns null if user cancel while being prompted, otherwise return the valid amount of salary
+ */
+const salaryValidation = function (firstName, lastName) {
+  while (true) {
+    let salary = window.prompt(
+      `Enter ${firstName} ${lastName}'s salary`
+    );
+
+    // handle "cancel" option, ask user once again before quit
+    if (salary === null) {
+      const stop = window.confirm("Are you sure to quit?");
+      if (stop) return null;
+      continue;
+    }
+    if (!isSalaryValid(salary)) {
+      window.alert("INVALID salary");
+      continue;
+    }
+    salary = parseFloat(salary);
+    if (salary < 0.01 || salary > 1_000_000_000) {
+      window.alert(
+        "Salary must be at least $0.01 and cannot exceed $1,000,000,000"
+      );
+      continue;
+    }
+
+    return salary;
+  }
 };
 
 /**
