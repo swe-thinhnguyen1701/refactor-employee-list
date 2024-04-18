@@ -2,7 +2,7 @@
 const addEmployeesBtn = document.querySelector("#add-employees-btn");
 
 // Create employee array const
-const employeeArr = [];
+// const employeeArr = [];
 
 // Collect employee data
 const collectEmployees = function () {
@@ -15,10 +15,13 @@ const collectEmployees = function () {
  * until user stops entering
  */
 const addNewEmployee = function () {
+  const employeeArr = [];
+
   let addNewEmployeeStatus = {
     process: true,
     interrupt: false,
   };
+
   while (addNewEmployeeStatus.process) {
     const employeeData = {
       firstName: "",
@@ -33,68 +36,74 @@ const addNewEmployee = function () {
     };
 
     // prompt first name
-    while (key.firstName) {
-      let firstName = window.prompt("Enter employee first name");
+    // while (key.firstName) {
+    //   let firstName = window.prompt("Enter employee first name");
 
-      // handle "cancel" option, ask user once again before quit
-      if (firstName === null) {
-        const stop = window.confirm("Are you sure to quit?");
-        if (stop) {
-          addNewEmployeeStatus.interrupt = true;
-          addNewEmployeeStatus.process = false;
-          break;
-        }
-      } else {
-        // clean first name
-        if (firstName.length === 0 || firstName.length > 32) {
-          window.alert(
-            "First name must have at least 1 character and at most 32 characters"
-          );
-        } else {
-          firstName = cleanName(firstName);
-          console.log(firstName);
-          if (firstName === null) {
-            window.alert("First name is INVALID");
-          } else {
-            employeeData.firstName = firstName;
-            key.lastName = true;
-            key.firstName = false;
-          }
-        }
-      }
-    }
+    //   // handle "cancel" option, ask user once again before quit
+    //   if (firstName === null) {
+    //     const stop = window.confirm("Are you sure to quit?");
+    //     if (stop) {
+    //       addNewEmployeeStatus.interrupt = true;
+    //       addNewEmployeeStatus.process = false;
+    //       break;
+    //     }
+    //   } else {
+    //     // clean first name
+    //     if (firstName.length === 0 || firstName.length > 32) {
+    //       window.alert(
+    //         "First name must have at least 1 character and at most 32 characters"
+    //       );
+    //     } else {
+    //       firstName = cleanName(firstName);
+    //       console.log(firstName);
+    //       if (firstName === null || firstName.length == 0 || firstName.length > 32) {
+    //         window.alert("First name is INVALID");
+    //       }
+    //       else {
+    //         employeeData.firstName = firstName;
+    //         key.lastName = true;
+    //         key.firstName = false;
+    //       }
+    //     }
+    //   }
+    // }
+    let firstName = nameValidation("first");
+    console.log(firstName);
+    if (firstName === null) break;
 
+    let lastName = nameValidation("last");
+    if (lastName === null) break;
     // Prompt last name
-    while (key.lastName) {
-      let lastName = window.prompt("Enter employee last name");
+    // while (key.lastName) {
+    //   let lastName = window.prompt("Enter employee last name");
 
-      // handle "cancel" option, ask user once again before quit
-      if (lastName === null) {
-        const stop = window.confirm("Are you sure to quit?");
-        if (stop) {
-          addNewEmployeeStatus.interrupt = true;
-          addNewEmployeeStatus.process = false;
-          break;
-        }
-      } else {
-        // clean first name
-        if (lastName.length === 0 || lastName.length > 32) {
-          window.alert(
-            "Last name must have at least 1 character and at most 32 characters"
-          );
-        } else {
-          lastName = cleanName(lastName);
-          console.log(lastName);
-          if (lastName === null) {
-            window.alert("Last name is INVALID");
-          } else {
-            employeeData.lastName = lastName;
-            key.salary = true;
-            key.lastName = false;
-          }
-        }
-      }
-    }
+    //   // handle "cancel" option, ask user once again before quit
+    //   if (lastName === null) {
+    //     const stop = window.confirm("Are you sure to quit?");
+    //     if (stop) {
+    //       addNewEmployeeStatus.interrupt = true;
+    //       addNewEmployeeStatus.process = false;
+    //       break;
+    //     }
+    //   } else {
+    //     // clean first name
+    //     if (lastName.length === 0 || lastName.length > 32) {
+    //       window.alert(
+    //         "Last name must have at least 1 character and at most 32 characters"
+    //       );
+    //     } else {
+    //       lastName = cleanName(lastName);
+    //       console.log(lastName);
+    //       if (lastName === null) {
+    //         window.alert("Last name is INVALID");
+    //       } else {
+    //         employeeData.lastName = lastName;
+    //         key.salary = true;
+    //         key.lastName = false;
+    //       }
+    //     }
+    //   }
+    // }
 
     // prompt salary
     while (key.salary) {
@@ -119,7 +128,7 @@ const addNewEmployee = function () {
             window.alert(
               "Salary must be at least $0.01 and cannot exceed $1,000,000,000"
             );
-          }else{
+          } else {
             employeeData.salary = salary;
             key.salary = false;
           }
@@ -138,12 +147,48 @@ const addNewEmployee = function () {
         "Would you like to continue to add more employee?"
       );
       if (!repeat) {
-        addNewEmployeeStatus.process = false; 
+        addNewEmployeeStatus.process = false;
       }
     }
   }
   console.log(employeeArr);
   return employeeArr;
+};
+
+/**
+ * nameValidation handles both first and last name of employees. It runs infinitely 
+ * until the name is valid or user interrupt (cancle) while being prompted
+ * @param {*} firstLastName first or last name of new employees
+ * @returns
+ */
+const nameValidation = function (firstLastName) {
+  while (true) {
+    let name = window.prompt(`Enter employee ${firstLastName} name`);
+
+    // handle "cancel" option, ask user once again before quit
+    if (name === null) {
+      const stop = window.confirm("Are you sure to quit?");
+      if (stop) {
+        return null;
+      }
+      continue;
+    }
+
+    if (name.length === 0 || name.length > 32) {
+      window.alert(
+        `${firstLastName} name must have at least 1 character and at most 32 characters`
+      );
+      continue;
+    }
+
+    name = cleanName(name);
+    if (name === null || name.length == 0 || name.length > 32) {
+      window.alert(`${firstLastName} name is INVALID`);
+      continue;
+    }
+
+    return name;
+  }
 };
 
 /**
@@ -201,8 +246,8 @@ const isSalaryValid = function (salary) {
 
   for (let i = 0; i < 10; i++) {
     const digit = salary.charCodeAt(i);
-    if (digit == 46){
-      if(period) return false;
+    if (digit == 46) {
+      if (period) return false;
       period = true;
       continue;
     }
@@ -216,17 +261,22 @@ const isSalaryValid = function (salary) {
 const displayAverageSalary = function (employeesArray) {
   // TODO: Calculate and display the average salary
   let sum = 0;
-  for(let employee of employeesArray){
+  for (let employee of employeesArray) {
     sum += employee.salary;
   }
 
-  console.log(`Average salary: $${sum/employeesArray.length}`);
+  console.log(`Average salary: $${sum / employeesArray.length}`);
 };
 
 // Select a random employee
 const getRandomEmployee = function (employeesArray) {
   // TODO: Select and display a random employee
-  console.log(`Random employee: ${employeesArray[Math.floor(Math.random() * employeesArray.length)].firstName}`);
+  console.log(
+    `Random employee: ${
+      employeesArray[Math.floor(Math.random() * employeesArray.length)]
+        .firstName
+    }`
+  );
 };
 
 /*
