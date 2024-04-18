@@ -64,7 +64,7 @@ const nameValidation = function (firstLastName) {
 
     // handle "cancel" option, ask user once again before quit
     if (employeeName === null) {
-      const stop = window.confirm("Are you sure to quit?");
+      const stop = window.confirm("Data is NOT saved.\nAre you sure to quit?");
       if (stop) {
         return null;
       }
@@ -133,7 +133,7 @@ const salaryValidation = function (firstName, lastName) {
 
     // handle "cancel" option, ask user once again before quit
     if (salary === null) {
-      const stop = window.confirm("Are you sure to quit?");
+      const stop = window.confirm("Data is NOT saved.\nAre you sure to quit?");
       if (stop) return null;
       continue;
     }
