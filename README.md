@@ -39,3 +39,17 @@ WHEN users enter too big/small value
 THEN the system will display error message and give a range for users to enter correct amount of salary
 ```
 ![Alert message pops up when users enter too big/small amount of salary](/img/big-small-amount-exception.png)
+
+## Calculate Average Salary and Random Employee Exception
+```
+WHEN a list is empty
+THEN the system will display error on console
+```
+![Display error message when a list is empty](/img/list-empty-exception.png)
+
+## Valid Input
+```
+WHEN user enter valid data
+THEN system will display all data on console and return the average salary and random employee on the console.
+```
+![Valid input](/img/valid-input.png)
