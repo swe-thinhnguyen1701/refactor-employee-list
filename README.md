@@ -2,7 +2,7 @@
 
 ## Achivement
 
-Modifying JS file makes the program understand multiple exceptions. It now can identify whether an input is valid or not and will help users to understand why exception raise. Therefore, users are able to adjust their input to let the system work more efficient. Additionally, the system also stores a backup data incase user unintentionally click cancel.
+Modifying JS file makes the program understand multiple exceptions. It now can identify whether an input is valid or not and will help users to understand why exception raise. Therefore, users are able to adjust their input to let the system work more efficient. Additionally, the system also stores a backup data incase user unintentionally click cancel. Visit at: https://swe-thinhnguyen1701.github.io/refactor-employee-list/
 
 ## Handle First/Last Name Input
 
